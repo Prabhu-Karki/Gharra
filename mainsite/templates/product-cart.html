@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cart{% endblock title %}
+
+{% block bodyclass %}
+<body class="product-cart checkout-cart blog">
+{% endblock bodyclass %}
+
+{% block content %}
+    <!-- main content -->
+    <div class="main-content" id="cart">
+        <!-- main -->
+        <div id="wrapper-site">
+            <!-- breadcrumb -->
+            <nav class="breadcrumb-bg">
+                <div class="container no-index">
+                    <div class="breadcrumb">
+                        <ol>
+                            <li>
+                                <a href="#">
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Shopping Cart</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </nav>
+            <div class="container my-5">
+             <div class="row">
+              <h1 class="text-center mb-5">Shopping Cart</h1>
+              <div class="col-sm-8">
+              <div class="card">
+               <div class="card-body">
+                <h3>Cart</h3>
+                {% for cart in carts %}
+                <hr>
+                <div class="row">
+                 <div class="col-sm-3 text-center align-self-center"><img src={{cart.cart_product.primary_image.url}} alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+                 <div class="col-sm-9">
+                  <div>
+                   <h5>{{cart.cart_product.title}}</h5>
+                   <p class="mb-2 text-muted small">Description: {{cart.cart_product.description}}</p>
+                   <div class="my-3">
+                    <label for="quantity">Quantity:</label>
+                    
+                    <a class="minus-cart btn" pid="{{cart.cart_product.id}}"><b>-</b></a>
+                      <span id="quantity">{{cart.quantity}}</span>
+                    <a class="plus-cart btn" pid="{{cart.cart_product.id}}"><b>+</b></a>
+                   </div>
+              
+                   <div class="d-flex justify-content-between">
+                    <a href="#" class="btn btn-sm btn-secondary mr-3 remove-cart" pid='{{cart.cart_product.id}}'>Remove item </a>
+                    <p class="mb-0"><span><strong>£. {{cart.cart_product.discounted_price}}</strong></span></p>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            </div>
+            
+              <div class="col-sm-4">
+               <div class="card">
+                <div class="card-body">
+                  <h3>The Total Amount of</h3>
+                  <ul class="list-group">
+                   <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">Amount<span>£. <span id = 'amount'>{{amount}}</span></span></li>
+                   <li class="list-group-item d-flex justify-content-between align-items-center px-0">Shipping<span>£. 80.00</span></li>
+                   <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                    <div>
+                       <strong>Total</strong> <small>(including VAT)</small>
+                     </div>
+                     <span><strong>£.<strong id='totalamount'> {{total_amount}}</strong></strong></span>
+                   </li>
+                  </ul>
+                  <div class="d-grid"><a href="{% url 'checkout' %}" class="btn btn-primary">Place Order</a></div>
+                </div>
+               </div>
+              </div>
+             </div>
+            </div>
+{% endblock %}
+
+{% comment %} <div class="container">
+    <div class="row">
+        <div id="content-wrapper" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onecol">
+            <section id="main">
+                <div class="cart-grid row">
+                    <div class="col-md-9 col-xs-12 check-info">
+                        <h1 class="title-page">Shopping Cart</h1>
+                        <div class="cart-container">
+                            <div class="cart-overview js-cart">
+                                <ul class="cart-items">
+                                    {% for cart in carts %}
+                                    <li class="cart-item">
+                                        <div class="product-line-grid row justify-content-between">
+                                            <!--  product left content: image-->
+                                            <div class="product-line-grid-left col-md-2">
+                                                <span class="product-image media-middle">
+                                                    <a href="{% url 'productdetail' cart.cart_product.id %}">
+                                                        <img class="img-fluid" src="{{cart.cart_product.primary_image.url}}" alt="{{cart.cart_product.title}}">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                            <div class="product-line-grid-body col-md-6">
+                                                <div class="product-line-info">
+                                                    <a class="label" href="product-detail.html" data-id_customization="0">{{cart.cart_product.title}}</a>
+                                                </div>
+                                                <div class="product-line-info product-price">
+                                                    <span class="value">£{{cart.cart_product.discounted_price}}</span>
+                                                </div>
+                                                <div class="product-line-info">
+                                                    <span class="label-atrr">Size:</span>
+                                                    <span class="value">S</span>
+                                                </div>
+                                                <div class="product-line-info">
+                                                    <span class="label-atrr">Color:</span>
+                                                    <span class="value">Blue</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-line-grid-right text-center product-line-actions col-md-4">
+                                                <div class="row">
+                                                    <div class="col-md-5 col qty">
+                                                        <div class="label">Qty:</div>
+                                                        <div class="quantity">
+                                                            <span class="input-group-btn-vertical">
+                                                                <a class=" plus-cart btn btn-touchspin js-touchspin bootstrap-touchspin-up" href='#' pid='{{cart.cart_product.id}}'>
+                                                                    +
+                                                                </a> 
+                                                               <span id='quantity'>{{cart.quantity}}</span>
+                                                                <a class=" minus-cart btn btn-touchspin js-touchspin bootstrap-touchspin-down" href='#' pid='{{cart.cart_product.id}}'>
+                                                                -
+                                                                </a>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5 col price">
+                                                        <div class="label" pid='{{cart.cart_product.id}}'>Total:</div>
+                                                        <div class="product-price total" id='amount'>
+                                                            £ {{amount}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col text-xs-right align-self-end">
+                                                        <div class="cart-line-product-actions ">
+                                                            <a class="remove-from-cart" rel="nofollow" href="#" data-link-action="delete-from-cart" data-id-product="1" pid='{{cart.cart_product.id}}'>
+                                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="product-checkout.html" class="continue btn btn-primary pull-xs-right">
+                            Continue
+                        </a>
+                    </div>
+                    <div class="cart-grid-right col-xs-12 col-lg-3">
+                        <div class="cart-summary">
+                            <div class="cart-detailed-totals">
+                                <div class="cart-summary-products">
+                                    <div class="summary-label">There are {{quantity}} item in your cart</div>
+                                </div>
+                                <div class="cart-summary-line" id="cart-subtotal-products">
+                                    <span class="label js-subtotal">
+                                        Total products:
+                                    </span>
+                                    <span class="value" id='amount'>£{{amount}}</span>
+                                </div>
+                                <div class="cart-summary-line" id="cart-subtotal-shipping">
+                                    <span class="label">
+                                        Total Shipping:
+                                    </span>
+                                    <span class="value">£80</span>
+                                    <div>
+                                        <small class="value"></small>
+                                    </div>
+                                </div>
+                                <div class="cart-summary-line cart-total">
+                                    <span class="label">Total:</span>
+                                    <span class="value" id='totalamount'>£{{total_amount}} (tax incl.)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="block-reassurance">
+                            <ul>
+                                <li>
+                                    <div class="block-reassurance-item">
+                                        <img src="{% static 'img/product/check1.png'%}" alt="Security policy (edit with Customer reassurance module)">
+                                        <span>Security policy (edit with Customer reassurance module)</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="block-reassurance-item">
+                                        <img src="{% static 'img/product/check2.png'%}" alt="Delivery policy (edit with Customer reassurance module)">
+                                        <span>Delivery policy (edit with Customer reassurance module)</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="block-reassurance-item">
+                                        <img src="{% static 'img/product/check3.png'%}" alt="Return policy (edit with Customer reassurance module)">
+                                        <span>Return policy (edit with Customer reassurance module)</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</div>
+</div> {% endcomment %}

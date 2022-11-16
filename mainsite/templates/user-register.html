@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load socialaccount %}
+{% block title %}Signup{% endblock title %}
+
+
+{% block bodyclass %} 
+<body class="user-register blog">
+{% endblock bodyclass %}
+
+{% block register %}
+    <!-- main content -->
+    <div class="main-content">
+        <div class="wrap-banner">
+
+            <!-- breadcrumb -->
+            <nav class="breadcrumb-bg">
+                <div class="container no-index">
+                    <div class="breadcrumb">
+                        <ol>
+                            <li>
+                                <a href="#">
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Register Account</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- main -->
+        <div id="wrapper-site">
+            <div class="container">
+                <div class="row">
+                    <div id="content-wrapper" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onecol">
+                        <div id="main">
+                            <div id="content" class="page-content">
+                                <div class="register-form text-center">
+                                    <h1 class="text-center title-page">Create Account</h1>
+                                    <form action="" id="customer-form" class="js-customer-form" method="POST">
+                                        {% csrf_token %}
+                                        <div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <input class="form-control" name="username" type="text" placeholder="Username" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <input class="form-control" name="email" type="email" placeholder="Email" required>
+                                                </div>
+                                            
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <div class="input-group js-parent-focus">
+                                                        <input class="form-control js-child-focus js-visible-password" name="password1" type="password" placeholder="Password" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <div class="input-group js-parent-focus">
+                                                        <input class="form-control js-child-focus js-visible-password" name="password2" type="password" placeholder="Confirm Password" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% if messages %}
+                                            {% for message in messages %}
+                                            <p><font color="red"><b>{{message}}</b></p></font>
+                                        {% endfor %}
+                                        {% endif %}
+                                            <div class="no-gutters text-center">
+                                                <div class="forgot-password">
+                                                    <a href="{% url 'signins' %}" rel="nofollow">
+                                                       <strong> Already have account?</strong>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix">
+                                            <div>
+                                                <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                                                    Create Account
+                                                </button>
+                                                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="{% provider_login_url 'google'%}?next=/"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Signup Using Google</a> </div>
+                                
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %} 

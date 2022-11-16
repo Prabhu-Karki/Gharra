@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+
+{% block bodyclass %}
+<body class="product-checkout checkout-cart">
+{% endblock bodyclass %}
+
+{% block content %}
+    <!-- main content -->
+    <div class="main-content">
+        <div class="wrap-banner">
+
+            <!-- breadcrumb -->
+            <nav class="breadcrumb-bg">
+                <div class="container no-index">
+                    <div class="breadcrumb">
+                        <ol>
+                            <li>
+                                <a href="#">
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>My Profile</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="acount head-acount">
+                <div class="container">
+                    <div id="main">
+                        <h1 class="title-page">My Profile</h1>
+                        <div class="content" id="block-history">
+                            {% for profile in profile %}
+                            <table class="std table">
+                                <tbody>
+                                    <tr>
+                                        <th class="first_item">My Name :</th>
+                                        <td>{{profile.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="first_item">Locality :</th>
+                                        <td>{{profile.locality}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="first_item">City :</th>
+                                        <td>{{profile.city}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="first_item">State :</th>
+                                        <td>{{profile.state}}</td>
+                                    </tr>
+                              
+                                    <tr>
+                                        <th class="first_item">Phone :</th>
+                                        <td>{{profile.phone}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="first_item">Email :</th>
+                                        <td>{{profile.email}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            {% endfor %}
+                        </div>
+
+                        <form action="{% url 'editprofile' %}">
+                        <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                            Edit Profile
+                        </button>
+                    </form>
+                        <div class="order">
+                            <h4>Order
+                                <span class="detail">History</span>
+                            </h4>
+                            <p>You haven't placed any orders yet.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}    
+
+
+    

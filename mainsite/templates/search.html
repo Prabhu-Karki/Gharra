@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Search Results{% endblock title %}
+
+{% block bodyclass %}
+
+<body id="contact" class="blog">
+{% endblock bodyclass  %}
+
+{% block content %}
+    <!-- main content -->
+    <div class="main-content">
+        <div id="wrapper-site">
+            <div id="content-wrapper">
+
+                <!-- breadcrumb -->
+                <nav class="breadcrumb-bg">
+                    <div class="container no-index">
+                        <div class="breadcrumb">
+                            <ol>
+                                <li>
+                                    <a href="#">
+                                        <span>Home</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span>Search Results</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </nav>
+
+{% if search_item|length == 0 %}
+<center><br><br><p>No Search Results for <b>"{{query}}"</b></p>
+We're sorry. We cannot find any matches for your search term.<br>
+<h4>Suggestions:</h4>
+<ul>
+<li>Make sure that all words are spelled correctly.</li>
+<li>Try different keywords.</li>
+<li>Try more general keywords.</li>
+<li>Try fewer keywords.</li>
+</ul>
+</center>
+{% else %}<br>
+<div class="container">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-8 col-lg-9 col-md-9">
+<div class="related">
+    <div class="title-tab-content  text-center">
+        <div class="title-product justify-content-start">
+            <h2>Search Results</h2>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="row">
+            {% for b in  search_item %}
+            <div class="item text-center col-md-4">
+                
+                <div class="product-miniature js-product-miniature item-one first-item">
+                    
+                    <div class="thumbnail-container border border">
+                        <a href="{% url 'productdetail' b.id%}">
+                            <img class="img-fluid image-cover" src="{{b.primary_image.url}}" alt="img">
+                            <img class="img-fluid image-secondary" src="{{b.secondary_image.url}}" alt="img">
+                        </a>
+                        <div class="highlighted-informations">
+                            <div class="variant-links">
+                                <a href="#" class="color beige" title="Beige"></a>
+                                <a href="#" class="color orange" title="Orange"></a>
+                                <a href="#" class="color green" title="Green"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-description">
+                        <div class="product-groups">
+                            <div class="product-title">
+                                <a href="{% url 'productdetail' b.id %}">{{b.title}}</a>
+                            </div>
+                            <div class="rating">
+                                <div class="star-content">
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                </div>
+                            </div>
+                            <div class="product-group-price">
+                                <div class="product-price-and-shipping">
+                                    <span class="price">£{{b.discounted_price}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-buttons d-flex justify-content-center">
+                            <form action="#" method="post" class="formAddToCart">
+                                
+                                <a class="add-to-cart" href="{% url 'addtocart' b.id %}" data-button-action="add-to-cart">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                </a>
+                            </form>
+
+                            <a href="#" class="quick-view hidden-sm-down" data-link-action="quickview">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endif %}
+{% endblock  %}
+

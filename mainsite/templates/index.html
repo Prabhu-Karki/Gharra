@@ -1,0 +1,353 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+
+{% block bodyclass %}
+
+<body id="home">
+{% endblock bodyclass %}
+
+{% block content %}
+ <!-- main content -->
+<div class="main-content">
+    <div class="wrap-banner">
+        <!-- slide show -->
+        <div class="section banner">
+            <div class="tiva-slideshow-wrapper">
+                    <div id="tiva-slideshow" class="nivoSlider">
+                        <a href="#">
+                            <img class="img-responsive" src="{% static 'img/home/home1-banner1.jpg' %}" title="#caption1" alt="Slideshow image">
+                        </a>
+                        <a href="#">
+                            <img class="img-responsive" src="{% static 'img/home/home1-banner2.jpg' %}" title="#caption2" alt="Slideshow image">
+                        </a>
+                        <a href="#">
+                            <img class="img-responsive" src={% static '/img/home/home1-banner3.jpg' %} title="#caption3" alt="Slideshow image">
+                        </a>
+                    </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- main -->
+    <div id="wrapper-site">
+        <div id="content-wrapper" class="full-width">
+            <div id="main">
+                <section class="page-home">
+                    <div class="container">
+
+                        <!-- delivery form -->
+                        <div class="section policy-home col-lg-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="block">
+                                        <div class="block-content">
+                                            <div class="policy-item">
+                                                <div class="policy-content iconpolicy1">
+                                                    <img src="{% static 'img/home/home1-policy.png' %}" alt="img">
+                                                    <div class="policy-name mb-5">FREE DELIVERY FROM $250</div>
+                                                    <div class="policy-des">Because we care for you.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tiva-html col-lg-4 col-md-4">
+                                    <div class="block">
+                                        <div class="block-content">
+                                            <div class="policy-item">
+                                                <div class="policy-content iconpolicy2">
+                                                    <img src="{% static 'img/home/home1-policy2.png' %}" alt="img">
+                                                    <div class="policy-name mb-5">Customer Service</div>
+                                                    <div class="policy-des">Email at: customercare@gharra.com</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tiva-html col-lg-4 col-md-4">
+                                    <div class="block">
+                                        <div class="block-content">
+                                            <div class="policy-item">
+                                                <div class="policy-content iconpolicy3">
+                                                    <img src="{% static 'img/home/home1-policy3.png' %}" alt="img">
+                                                    <div class="policy-name mb-5">MONEY BACK GUARANTEED</div>
+                                                    <div class="policy-des">Terms and Conditions applied.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+{% comment %} Added later {% endcomment %}
+<!-- product living room -->
+<div class="section living-room">
+    <div class="container">
+        <div class="tiva-row-wrap row">
+            <div class="groupcategoriestab-vertical col-md-12 col-xs-12">
+                <div class="grouptab row">
+                    <div class="categoriestab-right col-lg-3 align-items-start d-flex flex-column col-md-3 flex-3">
+                        <div class="block-title-content">
+                            <h2 class="title-block">
+                                Mobiles
+                            </h2>
+                        </div>
+                        <div class="cate-child-vertical">
+                            <ul class="d-flex align-items-start flex-column">
+                                <li>
+                                    <a href="{% static 'iphone' %}">Apple</a>
+                                </li>
+                                <li>
+                                    <a href="{% static 'samsung' %}">Samsung</a>
+                                </li>
+                                <li>
+                                    <a href="{% static 'xiaomi' %}">Xiaomi</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="block-title-content">
+                            <h2 class="title-block">
+                                Laptops
+                            </h2>
+                        </div>
+                        <div class="cate-child-vertical">
+                            <ul class="d-flex align-items-start flex-column">
+                                <li>
+                                    <a href={% static 'dell' %} >Dell</a>
+                                </li>
+                                <li>
+                                    <a href="{% static 'macbook' %}">Macbook</a>
+                                </li>
+                                <li>
+                                    <a href="{% static 'hp' %}">HP</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="categoriestab-left product-tab col-md-9 flex-9">
+                        <div class="title-tab-content d-flex justify-content-start">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a href="#new" data-toggle="tab" class="active">New Arrivals</a>
+                                </li>
+                                <li>
+                                    <a href="#sale" data-toggle="tab">Special Products</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content">
+                            <div id="new" class="tab-pane fade in active show">
+                                <div class="category-product-index owl-carousel owl-theme owl-loaded owl-drag">
+                                    {% comment %} new Arival first product {% endcomment %}
+                                    {% for new in new_arrival  %}
+                                    <div class="item text-center">
+                                        <div class="product-miniature first-item js-product-miniature item-one">
+                                            <div class="thumbnail-container">
+                                                <a href="{% url 'productdetail' new.id %}">
+                                                    <img class="img-fluid image-cover" src="{{new.primary_image.url}}" height = '600' width='600' alt="img">
+                                                    <img class="img-fluid image-secondary" src="{{new.secondary_image.url}}" alt="img">
+                                                </a>
+                                                {% comment %} <div class="product-flags discount">-30%</div> {% endcomment %}
+                                                <div class="highlighted-informations">
+                                                    <div class="variant-links">
+                                                        <a href="#" class="color beige" title="Beige"></a>
+                                                        <a href="#" class="color orange" title="Orange"></a>
+                                                        <a href="#" class="color green" title="Green"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="product-description">
+                                                <div class="product-groups">
+                                                    <div class="product-title">
+                                                        <a href= {% url 'productdetail' new.id %}>{{new.title}}</a>
+                                                    </div>
+                                                    <div class="rating">
+                                                        <div class="star-content">
+                                                            <div class="star"></div>
+                                                            <div class="star"></div>
+                                                            <div class="star"></div>
+                                                            <div class="star"></div>
+                                                            <div class="star"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-group-price">
+                                                        <div class="product-price-and-shipping">
+                                                            <span class="price">£{{new.discounted_price}}</span>
+                                                            <del class="regular-price">£{{new.selling_price}}</del>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-buttons d-flex justify-content-center">
+                                                    <form action="#" method="post" class="formAddToCart">
+                                                        <a class="add-to-cart" href="{% url 'addtocart' new.id %}" data-button-action="add-to-cart">
+                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                        </a>
+                                                    </form>
+                                                    <a href="{% url 'productdetail' new.id %}" class="quick-view hidden-sm-down" data-link-action="quickview">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+
+                            
+                            <div class="tab-pane fade" id="sale">
+                                <div class="category-product-index owl-carousel owl-theme">
+                                    {% for sp in special_product  %}
+                                    <div class="item text-center">
+                                        <div class="product-miniature js-product-miniature item-one first-item">
+                                            <div class="thumbnail-container">
+                                                <a href="product-detail.html">
+                                                    <img class="img-fluid image-cover" src="{{sp.primary_image.url}}" alt="img">
+                                                    <img class="img-fluid image-secondary" src="{{sp.secondary_image.url}}" alt="img">
+                                                </a>
+                                                {% comment %} <div class="product-flags discount">-30%</div> {% endcomment %}
+                                                <div class="highlighted-informations">
+                                                    <div class="variant-links">
+                                                        <a href="#" class="color beige" title="Beige"></a>
+                                                        <a href="#" class="color orange" title="Orange"></a>
+                                                        <a href="#" class="color green" title="Green"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-description">
+                                                <div class="product-groups">
+                                                    <div class="product-title">
+                                                        <a href="product-detail.html">{{sp.title}}</a>
+                                                    </div>
+                                                    <div class="rating">
+                                                        <div class="star-content">
+                                                            <div class="star"></div>
+                                                            <div class="star"></div>
+                                                            <div class="star"></div>
+                                                            <div class="star"></div>
+                                                            <div class="star"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-group-price">
+                                                        <div class="product-price-and-shipping">
+                                                            <span class="price">£{{sp.discounted_price}}</span>
+                                                            <del class="regular-price">£{{sp.selling_price}}</del>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-buttons d-flex justify-content-center">
+                                                    <form action="#" method="post" class="formAddToCart">
+                                                        <a class="add-to-cart" href="addtocart" data-button-action="add-to-cart">
+                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                        </a>
+                                                    </form>
+                                                
+                                                    <a href="{% url 'productdetail' sp.id %}" class="quick-view hidden-sm-down" data-link-action="quickview">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                    <div class="container">
+                        <!-- banner -->
+                        <div class="section spacing-10 group-image-special col-lg-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="effect">
+                                        <a href="#">
+                                            <img class="img-fluid" src="static/img/home/effect1.jpg" alt="" title="banner-1">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="effect">
+                                        <a href="#">
+                                            <img class="img-fluid" src="static/img/home/effect2.jpg" alt="" title="banner-1">
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                        <!-- partner -->
+                        <div class="section introduct-logo">
+                            <div class="row">
+                                <div class="tiva-manufacture  col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                    <div class="block">
+                                        <div id="manufacture" class="owl-carousel owl-theme owl-loaded owl-drag">
+                                            <div class="item">
+                                                <div class="logo-manu">
+                                                    <a href="#" title="view products">
+                                                        <img class="img-fluid" src="static/img/home/icon-logo1.jpg" alt="img" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="logo-manu">
+                                                    <a href="#" title="view products">
+                                                        <img class="img-fluid" src="static/img/home/icon-logo2.jpg" alt="img" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="logo-manu">
+                                                    <a href="#" title="view products">
+                                                        <img class="img-fluid" src="static/img/home/icon-logo3.jpg" alt="img" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="logo-manu">
+                                                    <a href="#" title="view products">
+                                                        <img class="img-fluid" src="static/img/home/icon-logo4.jpg" alt="img" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="logo-manu">
+                                                    <a href="#" title="view products">
+                                                        <img class="img-fluid" src="static/img/home/icon-logo5.jpg" alt="img" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="logo-manu">
+                                                    <a href="#" title="view products">
+                                                        <img class="img-fluid" src="static/img/home/icon-logo6.jpg" alt="img" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

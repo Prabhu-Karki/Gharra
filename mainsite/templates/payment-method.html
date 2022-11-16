@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Payment Method{% endblock title %}
+
+{% block bodyclass %}
+<style>
+    .column {
+        float: left;
+        width: 33.3%;
+        margin-bottom: 16px;
+        padding: 0 8px;
+      }
+      
+
+      @media screen and (max-width: 650px) {
+        .column {
+          width: 100%;
+          display: block;
+        }
+      }
+      
+
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+      
+
+      .container {
+        padding: 0 16px;
+      }
+      
+      .container::after, .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+      
+      .title {
+        color: grey;
+      }
+      
+      .button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+      }
+      
+      .button:hover {
+        background-color: #555;
+      }
+</style>
+<body class="product-checkout checkout-cart">
+{% endblock bodyclass %}
+
+{% block content %}
+    <!-- main content -->
+    <div id="checkout" class="main-content">
+        <div class="wrap-banner">
+            <!-- breadcrumb -->
+            <nav class="breadcrumb-bg">
+                <div class="container no-index">
+                    <div class="breadcrumb">
+                        <ol>
+                            <li>
+                                <a href="#">
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Payment Methods</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </nav>
+<div class="container">
+ <div class="row mt-5">
+  <div class="col-sm-6">
+    <h4>Payment Method</h4>
+    <hr>
+  </div>
+  </div>  
+    <form action="/paymentmethod">
+        <div class="row">
+            <div class="column">
+                <center>
+              <div class="card">
+                <img src="static/img/home/cod.png" alt="Jane" style="width:27%">
+                <div class="container">
+                  <h5>Cash on Delivery</h5>
+                  <input class="form-check-input" type="radio" name='custid' id='custadd {{forloop.counter}}' value="{{ad.id}}" required>
+                </div>
+              </div>
+              <center>
+            </div>
+          
+            <div class="column">
+                <center>
+              <div class="card">
+                <img src="static/img/home/logo-paypal.png" alt="Mike" style="width:62%">
+                <div class="container">
+                  <h5>Paypal</h5>
+                  <input class="form-check-input" type="radio" name='custid' id='custadd {{forloop.counter}}' value="{{ad.id}}" required>
+
+                </div>
+              </div>
+            </center>
+            </div>
+          
+            <div class="column">
+                <center>
+              <div class="card">
+                <img src="static/img/home/credit_card.png" alt="John" style="width:39%">
+                <div class="container">
+                  <h5>Credit Card</h5>
+                    <input class="form-check-input" type="radio" name='custid' id='custadd {{forloop.counter}}' value="{{ad.id}}" required>
+                </div>
+              </div>
+            </center>
+            </div>
+          </div>
+         <center> <button class="btn btn-primary add-to-cart add-item"   data-button-action="add-to-cart" type="submit">
+            <span>Select Payment Method</span>
+        </button></center>
+        </form>
+</div>
+
+{% endblock %}

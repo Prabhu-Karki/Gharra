@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+
+{% block bodyclass %}
+<body class="product-checkout checkout-cart">
+{% endblock bodyclass %}
+
+{% block content %}
+    <!-- main content -->
+    <div id="checkout" class="main-content">
+        <div class="wrap-banner">
+            <!-- breadcrumb -->
+            <nav class="breadcrumb-bg">
+                <div class="container no-index">
+                    <div class="breadcrumb">
+                        <ol>
+                            <li>
+                                <a href="#">
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </nav>
+
+<div class="container my-5">
+ <div class="row">
+ <h3>Welcome {{request.user}}</h3>
+  <div class="col-sm-9 offset-sm-1">
+   <div class="row">
+    {% for ad in add %}
+    <div class="col-sm-6">
+     <div class="card">
+      <div class="card-body">
+       <h3>Address {{forloop.counter}}</h3>
+       <p>Name: {{ad.name}}</p>
+       <p>State: {{ad.state}}</p>
+        <p>City: {{ad.city}}</p>
+       <p>Locality: {{ad.locality}}</p>
+       <p>Zip Code: {{ad.zipcode}}</p>
+      </div>
+     </div>
+    </div>
+    {% endfor %}
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cart{% endblock title %}
+
+{% block bodyclass %}
+<body id="page-404" class="blog">
+{% endblock bodyclass %}
+
+{% block content %}
+    <!-- main content -->
+    <div class="main-content">
+        <div id="wrapper-site">
+            <div id="content-wrapper">
+                <section class="page-home">
+                    <div class="container">
+                        <div class="row center">
+                            <div class="content-404 col-lg-6 col-sm-6 text-center">
+                                <div class="image">
+                                    <img class="img-fluid" src="{% static 'img/other/image-404.png' %}" alt="Image 404">
+                                </div>
+                                <h2 class="h4">You don't have any product in your cart.</h2>
+                                <div class="info">
+                                    <p>You can add products in your cart from the homepage or you can search for it and add it.</p>
+                                </div>
+                                <a class="btn btn-default" href="/">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                    <span>Back to homepage</span>
+                                </a>
+                            </div>
+                            <div class="content-right-404 col-lg-6 col-sm-6 text-center">
+                                <a href="#">
+                                    <img class="img-fluid" src="{% static 'img/other/background.jpg' %}" alt="image 404 right">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}
