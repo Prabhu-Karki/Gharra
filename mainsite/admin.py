@@ -33,3 +33,6 @@ class OrderAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('id', 'customer_name','review_date', 'review')
 
+@admin.register(BuyNow)
+class BuyNowAdmin(admin.ModelAdmin):
+    list_display = ('id', 'buyer','product')

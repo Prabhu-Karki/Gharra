@@ -70,6 +70,20 @@ class Cart(models.Model):
     def total_cost(self):
         return self.quantity * self.cart_product.discounted_price
 
+class BuyNow(models.Model):
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    color = models.CharField(max_length = 30, blank= True, default='Black')
+    storage = models.PositiveIntegerField(default=64)
+
+    def __str__(self):
+        return str(self.product)
+
+    @property
+    def total_cost(self):
+        return self.quantity * self.product.discounted_price
+
 STATUS_CHOICES = (
     ('Accepted', 'Accepted'),
     ('Packed', 'Packed'),
@@ -89,6 +103,7 @@ class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    payment_method = models.CharField(default= 'pending', max_length=50)
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=STATUS_CHOICES, default='pending', max_length=50)

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="zxx">
@@ -46,6 +47,10 @@
         <!-- header left mobile -->
         <div class="header-mobile d-md-none">
             <div class="mobile hidden-md-up text-xs-center d-flex align-items-center justify-content-around">
+                  <!-- menu left -->
+                  <div id="mobile_mainmenu" class="item-mobile-top">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
 
                 <!-- logo -->
                 <div class="mobile-logo">
@@ -68,7 +73,9 @@
                             <i class="fa fa-search"></i>
                         </button>
                     </form>
+                  
                 </div>
+                
                 {% if request.user.is_authenticated %}
                 <div class="desktop_cart">
                     <div class="blockcart block-cart cart-preview tiva-toggle">
@@ -151,6 +158,14 @@
                                         </a>
                                     </div>
                                     {% endif %}
+
+                                    <div>
+                                        <a class="login" href={% url 'history' %} rel="nofollow" title="View your Profile">
+                                            <i class="fa fa-cog"></i>
+                                            <span>Order History</span>
+                                        </a>
+                                    </div>
+                                    
                                     <div>
                                         <a class="login" href={% url 'passwordchange' %} rel="nofollow" title="View your Profile">
                                             <i class="fa fa-cog"></i>
@@ -341,7 +356,7 @@
                                             <div class="social">
                                                 <ul class="list-inline mb-0 justify-content-end">
                                                     <li class="list-inline-item mb-0">
-                                                        <a href="#" target="_blank">
+                                                        <a href="https://www.facebook.com/" target="_blank">
                                                             <i class="fa fa-facebook"></i>
                                                         </a>
                                                     </li>
@@ -406,6 +421,103 @@
     
     </div>
 
+<!-- menu mobie left -->
+<div class="mobile-top-menu d-md-none">
+    <button type="button" class="close" aria-label="Close">
+        <i class="zmdi zmdi-close"></i>
+    </button>
+    <div class="tiva-verticalmenu block" data-count_showmore="17">
+        <div class="box-content block-content">
+            <div class="verticalmenu" role="navigation">
+                <ul class="menu level1">
+                    <li class="item">
+                        <a href="/" class="hasicon" title="Home">
+                            Home
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="contact" class="hasicon" title="Contact Us">
+                                    Contact US
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="aboutus" class="hasicon" title="About Us">
+                                About US
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- menu mobie right -->
+<div id="mobile-pagemenu" class="mobile-boxpage d-flex hidden-md-up active d-md-none">
+    <div class="content-boxpage col">
+        <div class="box-header d-flex justify-content-between align-items-center">
+            <div class="title-box">Menu</div>
+            <div class="close-box">Close</div>
+        </div>
+        <div class="box-content">
+            <nav>
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div id="megamenu" class="clearfix">
+                    <ul class="menu level1">
+                        {% if request.user.is_authenticated %}
+                        {% if profile %}
+                        <li class="item home-page has-sub">
+                            <span class="arrow collapsed" data-toggle="collapse" data-target="#home1" aria-expanded="true" role="status">
+                                <i class="zmdi zmdi-minus"></i>
+                                <i class="zmdi zmdi-plus"></i>
+                            </span>
+                            <a href="/" title="Home">
+                                <i class="fa fa-home" aria-hidden="true"></i>My Profile</a>
+                        </li>
+                        {% else %}
+                        <li class="item has-sub">
+                            <span class="arrow collapsed" data-toggle="collapse" data-target="#blog" aria-expanded="false" role="status">
+                                <i class="zmdi zmdi-minus"></i>
+                                <i class="zmdi zmdi-plus"></i>
+                            </span>
+                            <a href="#" title="Blog">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>Create Profile</a>
+                        </li>
+                        {% endif %}
+                        <li class="item group has-sub">
+                            <span class="arrow collapsed" data-toggle="collapse" data-target="#page" aria-expanded="false" role="status">
+                                <i class="zmdi zmdi-minus"></i>
+                                <i class="zmdi zmdi-plus"></i>
+                            </span>
+                            <a href="#" title="Page">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>Change Password</a>
+                        </li>
+                        {% if cart.cart_product %}
+                        <li class="item has-sub">
+                            <a href="contact.html" title="Contact us">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>Checkout</a>
+                        </li>
+                        {% endif %}
+                        <li class="item has-sub">
+                            <a href="contact.html" title="Contact us">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="item has-sub">
+                            <a href="contact.html" title="Contact us">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>Signin</a>
+                        </li>
+                        <li class="item has-sub">
+                            <a href="contact.html" title="Contact us">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>Register Account</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
     <!-- Page Loader -->
     <div id="page-preloader">
         <div class="page-loading">
@@ -436,3 +548,6 @@
     <script src="{% static 'js/theme.js' %} "></script>
 </body>
 </html>
+
+
+

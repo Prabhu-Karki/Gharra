@@ -1,7 +1,6 @@
 from django.contrib.auth.views import PasswordChangeView
-from itertools import product
 from os import link
-from urllib import request
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .models import *
@@ -164,8 +163,6 @@ def create_profile(request):
         return render(request, 'user-acount.html', {'profile': profile, 'cart': cart,'active': 'nav-link', 'totalitem': totalitem})
 
 
-
-
 @login_required
 def editprofile(request):
     profile= Customer.objects.get(user=request.user)
@@ -196,14 +193,6 @@ def addtocart(request,id):
     else:
         Cart(cart_user = user, cart_product = product, product_storage=storage, product_color=color).save()
     return redirect('show_cart')
-    
-@login_required
-def payment_method(request):
-    profile = Customer.objects.filter(user=request.user)
-    cart= Cart.objects.filter(cart_user= request.user)
-    if request.user.is_authenticated:
-        totalitem = len(Cart.objects.filter(cart_user = request.user))
-    return render(request, 'payment-method.html', {'profile' : profile, 'cart': cart, 'active': 'nav-link','totalitem': totalitem})
 
 def plus_cart(request):
     if request.method == 'GET':
@@ -218,8 +207,8 @@ def plus_cart(request):
             temp_amount= (p.cart_product.discounted_price) * (p.quantity)
             amount += temp_amount
 
-        data = {
 
+        data = {
             'quantity': c.quantity,
             'amount': amount, 
             'totalamount':  amount + shipping_amount
@@ -241,18 +230,30 @@ def checkout(request):
     cart= Cart.objects.filter(cart_user= request.user)
     add = Customer.objects.filter(user=user)
     cart_items = Cart.objects.filter(cart_user = user)
+    buyer_items = BuyNow.objects.filter(buyer= user)
     amount = 0.0
     shipping_amount = 80.0
     cart_product = [p for p in Cart.objects.all() if p.cart_user == request.user]
+    buyer_product = [p for p in BuyNow.objects.all() if p.buyer == request.user]
     if request.user.is_authenticated:
         totalitem = len(Cart.objects.filter(cart_user = request.user))
+
+    if buyer_product:
+        for p in buyer_product:
+            temp_amount= (p.product.discounted_price) * (p.quantity)
+            amount += temp_amount
+        totalamount= amount + shipping_amount
+        return render(request, 'product-checkout.html', {'add': add, 'active': 'nav-link', 'buyer_items': buyer_items, 'totalamount': totalamount, 'profile': profile, 'cart': cart, 'totalitem': totalitem})
+
     if cart_product:
         for p in cart_product:
             temp_amount= (p.cart_product.discounted_price) * (p.quantity)
             amount += temp_amount
         totalamount= amount + shipping_amount
-    return render(request, 'product-checkout.html', {'add': add, 'active': 'nav-link', 'totalamount': totalamount, 'cart_items': cart_items, 'profile': profile, 'cart': cart, 'totalitem': totalitem})
+        return render(request, 'product-checkout.html', {'add': add, 'active': 'nav-link', 'totalamount': totalamount, 'cart_items': cart_items, 'profile': profile, 'cart': cart, 'totalitem': totalitem})
+    return render(request, 'product-checkout.html', {'add': add, 'active': 'nav-link', 'profile': profile, 'cart': cart, 'totalitem': totalitem})
 
+    
 
 @login_required
 def show_cart(request):
@@ -328,25 +329,67 @@ def handle_not_found(request, exception):
 
 @login_required
 def payment_method(request):
-    cart= Cart.objects.filter(cart_user= request.user)
+    buyer = BuyNow.objects.filter(buyer=request.user)
     user = request.user
     custid = request.GET.get('custid')
-    print(custid)
     customer = Customer.objects.get(id=custid)
     cart = Cart.objects.filter(cart_user = user)
-    for c in cart:
-        OrderPlaced(user=user, customer=customer, product = c.cart_product, quantity= c.quantity).save()
-        c.delete()
-        return redirect('orders')
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(cart_user = request.user))
+
+    if buyer:
+        for c in buyer:
+            OrderPlaced(user=user, customer =customer,  product = c.product, quantity= c.quantity).save()
+            c.delete()
+            return render(request, 'payment-method.html', {'active': 'nav-link', 'profile': profile, 'cart': cart, 'totalitem': totalitem})
+            # return redirect('orders')
+    else:
+        for c in cart:
+            OrderPlaced(user=user, customer = customer, product = c.cart_product, quantity= c.quantity).save()
+            c.delete()
+            
+    return render(request, 'payment-method.html', {'active': 'nav-link', 'profile': profile, 'cart': cart, 'totalitem': totalitem})
 
 @login_required
 def orders(request):
+    buyer = BuyNow.objects.filter(buyer=request.user)
+    user = request.user
+    custid = request.GET.get('custid')
+    customer = Customer.objects.get(id=custid)
     profile = Customer.objects.filter(user=request.user)
     cart= Cart.objects.filter(cart_user= request.user)
     op = OrderPlaced.objects.filter(user= request.user)
+    payment_method = request.GET.get('payment', False)
+
+
     if request.user.is_authenticated:
         totalitem = len(Cart.objects.filter(cart_user = request.user))
-    return render(request, 'orders.html', {'order_placed': op, 'active': 'nav-link', 'profile': profile, 'cart': cart, 'totalitem': totalitem})
+
+    if buyer:
+        for c in buyer:
+            OrderPlaced(user=user, customer =customer, payment_method=payment_method, product = c.product, quantity= c.quantity).save()
+            c.delete()
+            return render(request, 'orders.html', {'order_placed': op, 'payment_method': payment_method, 'active': 'nav-link', 'profile': profile, 'cart': cart, 'totalitem': totalitem})
+            # return redirect('orders')
+    else:
+        for c in cart:
+            OrderPlaced(user=user, customer = customer, product = c.cart_product, payment_method=payment_method, quantity= c.quantity).save()
+            c.delete()
+
+    return render(request, 'orders.html', {'order_placed': op, 'active': 'nav-link',  'profile': profile, 'cart': cart, 'totalitem': totalitem})
+
+
+@login_required
+def buynow(request, id):
+    user = request.user
+    product = Product.objects.get(id=id)
+    storage = request.GET.get('storage', False)
+    color = request.GET.get('color', False)
+    buyer_product = BuyNow.objects.all()
+    if buyer_product:
+        buyer_product.delete()
+    BuyNow(buyer = user, product = product, storage=storage, color=color).save()
+    return redirect('checkout')
 
 
 def aboutus(request):
@@ -371,10 +414,6 @@ def search(request):
     query = request.GET['query']
     url = request.META.get('HTTP_REFERER')
 
-    if request.user.is_authenticated:
-        cart= Cart.objects.filter(cart_user= request.user)
-        profile = Customer.objects.filter(user=request.user)
-        totalitem = len(Cart.objects.filter(cart_user = request.user))
 
     if len(query) > 20:
         search_item = []
@@ -388,7 +427,16 @@ def search(request):
         search_item_by_desc = Product.objects.filter(description__icontains = query)
         search_item = search_item_by_title.union(search_item_by_brand, search_item_by_desc)
 
-    return render(request, 'search.html', {'search_item': search_item, 'query': query, 'active': 'nav-link', 'cart': cart, 'totalitem': totalitem, 'profile': profile})
+        if request.user.is_authenticated:
+            cart= Cart.objects.filter(cart_user= request.user)
+            profile = Customer.objects.filter(user=request.user)
+            totalitem = len(Cart.objects.filter(cart_user = request.user))
+
+            return render(request, 'search.html', {'search_item': search_item, 'query': query, 'active': 'nav-link', 'cart': cart, 'totalitem': totalitem, 'profile': profile})
+    return render(request, 'search.html', {'search_item': search_item, 'query': query, 'active': 'nav-link'})
+
+
+
 
 def signup_redirect(request):
     messages.error(request, "Something wrong here, it may be that you already have account!")
@@ -397,3 +445,12 @@ def signup_redirect(request):
 def page_not_found_view(request, exception):
     return render(request, '404.html', status=404)
 
+@login_required
+def history(request):
+    profile = Customer.objects.filter(user=request.user)
+    cart= Cart.objects.filter(cart_user= request.user)
+    op = OrderPlaced.objects.filter(user= request.user)
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(cart_user = request.user))
+
+    return render(request, 'history.html', {'order_placed': op, 'active': 'nav-link',  'profile': profile, 'cart': cart, 'totalitem': totalitem})

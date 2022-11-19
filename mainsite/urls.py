@@ -1,11 +1,9 @@
-from urllib import request
-from wsgiref.util import request_uri
 from django.urls import path
 from . import views
-from django.conf.urls.static import static
-from django.conf import settings
 from django.contrib.auth import views as auth_views
 from .forms import *
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
@@ -40,6 +38,7 @@ urlpatterns = [
     path('pluscart/', views.plus_cart), 
     path('minuscart/', views.minus_cart),
     path('removecart/', views.remove_cart), 
+    path('buynow/<int:id>/', views.buynow, name='buynow'),
 
     path('productdetail/<int:pk>/', views.ProductDetailView.as_view(), name='productdetail'),
     path('review_rate/', views.review_rate, name='review_rate'),
@@ -50,9 +49,12 @@ urlpatterns = [
     path('create-user-account/', views.create_profile, name='create-user-account'),
     path('profile/', views.profile, name='profile'),
     path('editprofile/', views.editprofile, name='editprofile'),
+    path('orderhistory/', views.history, name='history'),
+
 
     path('orders/', views.orders, name='orders'),
     path('paymentmethod/', views.payment_method, name='paymentmethod'),
-    
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+       
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ 
+

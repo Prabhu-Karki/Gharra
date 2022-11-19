@@ -178,8 +178,9 @@ display: inline-block;
                                                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                                                 <span>Add to cart</span>
                                                                             </button>
-                                                                        </form>
-                                                                        <form action="{% url 'checkout' %}" class="sideBySideForm">
+                                                            </form>
+
+                                                                        <form action="{% url 'buynow' product.id %}" class="sideBySideForm">
                                                                            <button class="btn btn-primary add-to-cart add-item">
                                                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                                                 <span>Buy Now</span>

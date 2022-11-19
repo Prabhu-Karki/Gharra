@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Order Placed{% endblock title %}
+{% block title %}Order History{% endblock title %}
 {% block bodyclass %}
 <body class="product-cart checkout-cart blog">
 {% endblock bodyclass %}
@@ -33,6 +33,7 @@
 
 <div class="container my-5">
  <div class="row">
+
   <div class="col-sm-9 offset-sm-1">
     {% for op in order_placed %}
    <div class="row shadow-sm mb-3">

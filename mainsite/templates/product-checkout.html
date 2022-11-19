@@ -3,6 +3,58 @@
 {% block title %}Checkout{% endblock title %}
 
 {% block bodyclass %}
+<style>
+  .column {
+      float: left;
+      width: 33.3%;
+      margin-bottom: 16px;
+      padding: 0 8px;
+    }
+    
+
+    @media screen and (max-width: 650px) {
+      .column {
+        width: 100%;
+        display: block;
+      }
+    }
+    
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+
+    .container {
+      padding: 0 16px;
+    }
+    
+    .container::after, .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    
+    .title {
+      color: grey;
+    }
+    
+    .button {
+      border: none;
+      outline: 0;
+      display: inline-block;
+      padding: 8px;
+      color: white;
+      background-color: #000;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+    }
+    
+    .button:hover {
+      background-color: #555;
+    }
+</style>
 <body class="product-checkout checkout-cart">
 {% endblock bodyclass %}
 
@@ -34,6 +86,20 @@
   <div class="col-sm-6">
     <h4>Order Summary</h4>
     <hr>
+    {% if buyer_items %}
+    {% for item in buyer_items  %}
+    <div class="card mb-2">
+      <div class="card-body">
+        <h5>Product: {{item.product.title}}</h5>
+        <p>Quantity: {{item.quantity}} </p>
+        <p class="fw-bold">Price: {{item.total_cost}}</p>
+      </div>
+    </div>
+    <p class='fw-bold'>Total Cost + Rs.80 = {{totalamount}}</p>
+    {% endfor %}
+
+    {% else %}
+
     {% for item in cart_items  %}
       <div class="card mb-2">
         <div class="card-body">
@@ -42,16 +108,17 @@
           <p class="fw-bold">Price: {{item.total_cost}}</p>
         </div>
       </div>
-      {% endfor %}
       <p class='fw-bold'>Total Cost + Rs.80 = {{totalamount}}</p>
-    <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+      {% endfor %}
+      {% endif %}
+    
+    {% comment %} <small>Terms and Condition applied.</small> {% endcomment %}
   </div>
-
   
   <div class="col-sm-4 offset-sm-1">
-    <h4>Select Shipping Address</h4>
+    <h4>Shipping Address</h4>
     <hr>
-    <form action="/paymentmethod">
+    <form action={% url 'orders' %}>
       {% for ad in add %}
       <div class="card">
         <div class="card-body">
@@ -62,22 +129,72 @@
         
       </div>
         <div class="form-check mt-2 mb-5">
-          <input class="form-check-input" type="radio" name='custid' id='custadd {{forloop.counter}}' value="{{ad.id}}" required>
-          <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
-            Address: {{forloop.counter}} </label>
-        </div>
+          <input  type="hidden" name='custid' id='custadd {{forloop.counter}}' value="{{ad.id}}" >
+        </div>  
 
         {% endfor %}
-        {% if profile %}
-        <div class="text-end">
-          <button type="submit" class="btn btn-secondary mt-3 px-5 fw-bold">Continue</button>
-        </div>
-        {% else %}
-        <p><b>You haven't created a profile. Please create it first for delivery address.
-        <div class="d-grid"><a href="{% url 'create-user-account' %}" class="btn btn-primary">Create Profile</a></div>
-        {% endif %}
-      </form>
+
+      {% comment %} </form> {% endcomment %}
     </div>
   </div>
+
+<div class="container">
+  <div class="row mt-5">
+   <div class="col-sm-6">
+     <h4>Payment Method</h4>
+     <hr>
+   </div>
+   </div>  
+     {% comment %} <form action="/orders"> {% endcomment %}
+         <div class="row">
+             <div class="column">
+                 <center>
+               <div class="card">
+                 <img  src={% static '/img/home/cod.png' %} alt="Cash On Delivery" style="width:27%">
+                 <div class="container">
+                   <h5>Cash on Delivery</h5>
+                   <input class="form-check-input" type="radio" name='payment'   value="Cash On Delivery" required>
+                 </div>
+               </div>
+               <center>
+             </div>
+           
+             <div class="column">
+                 <center>
+               <div class="card">
+                 <img src={% static '/img/home/logo-paypal.png' %} alt="Paypal" style="width:62%">
+                 <div class="container">  
+                   <h5>Paypal</h5>
+                   <input class="form-check-input" type="radio" name='payment' value="Paypal" required>
+                 
+                 </div>
+               </div>
+             </center>
+             </div>
+           
+             <div class="column">
+                 <center>
+               <div class="card">
+                 <img src={% static '/img/home/credit_card.png' %} alt="Credit Card" style="width:39%">
+                 <div class="container">
+                   <h5>Credit Card</h5>
+                     <input class="form-check-input" type="radio" name='payment'  value="Credit Card" required>
+                 </div>
+               </div>
+             </center>
+             </div>
+           </div>
+           
+   
+           {% if profile %}
+          <center> <button class="btn btn-primary add-to-cart add-item"   data-button-action="add-to-cart" type="submit">
+             <span>Select Payment Method</span>
+         </button></center>
+         {% else %}
+         <p><b>You haven't created a profile. Please create it first for delivery address.
+         <div class="d-grid"><a href="{% url 'create-user-account' %}" class="btn btn-primary">Create Profile</a></div>
+         {% endif %}
+        </form>
+ </div>
 </div>
 {% endblock %}

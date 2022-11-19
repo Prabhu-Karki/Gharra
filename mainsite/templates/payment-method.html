@@ -88,15 +88,15 @@
     <hr>
   </div>
   </div>  
-    <form action="/paymentmethod">
+    <form action="/orders">
         <div class="row">
             <div class="column">
                 <center>
               <div class="card">
-                <img src="static/img/home/cod.png" alt="Jane" style="width:27%">
+                <img  src={% static '/img/home/cod.png' %} alt="Cash On Delivery" style="width:27%">
                 <div class="container">
                   <h5>Cash on Delivery</h5>
-                  <input class="form-check-input" type="radio" name='custid' id='custadd {{forloop.counter}}' value="{{ad.id}}" required>
+                  <input class="form-check-input" type="radio" name='payment'  value="Cash On Delivery" required>
                 </div>
               </div>
               <center>
@@ -105,11 +105,11 @@
             <div class="column">
                 <center>
               <div class="card">
-                <img src="static/img/home/logo-paypal.png" alt="Mike" style="width:62%">
+                <img src={% static '/img/home/logo-paypal.png' %} alt="Paypal" style="width:62%">
                 <div class="container">
                   <h5>Paypal</h5>
-                  <input class="form-check-input" type="radio" name='custid' id='custadd {{forloop.counter}}' value="{{ad.id}}" required>
-
+                  <input class="form-check-input" type="radio" name='payment'  value="Paypal" required>
+                
                 </div>
               </div>
             </center>
@@ -118,10 +118,10 @@
             <div class="column">
                 <center>
               <div class="card">
-                <img src="static/img/home/credit_card.png" alt="John" style="width:39%">
+                <img src={% static '/img/home/credit_card.png' %} alt="Credit Card" style="width:39%">
                 <div class="container">
                   <h5>Credit Card</h5>
-                    <input class="form-check-input" type="radio" name='custid' id='custadd {{forloop.counter}}' value="{{ad.id}}" required>
+                    <input class="form-check-input" type="radio" name='payment' value="Credit Card" required>
                 </div>
               </div>
             </center>
