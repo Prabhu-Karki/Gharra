@@ -5,9 +5,8 @@ Gharra is a Single Vendor E-commerce website designed from HTML, CSS and JavaScr
 <b>Requirements:</b>
 
 Django >= Django==4.0.6<br>
-Python >= 3.10.5<br>
+Python >= 3.10.5<br><br>
 Installation and Set-up<br>
-
 Clone this repository git clone https://github.com/Prabhu-Karki/Gharra<br>
 Go inside the folder cd Gharra<br>
 Run: pip install -r requirements.txt<br>
